@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo"
+      loaded="onLoaded"
+      unloaded="onUnloaded"
+      class="page">
+    
+    <ActionBar title="Inqut" class="action-bar">
+        <NavigationButton visibility="collapsed" />
+    </ActionBar>
+    
+    <BottomNavigation selectedIndex="{{ selectedIndex }}" class="bottom-nav">
+        <TabStrip>
+            <TabStripItem>
+                <Label text="Home" />
+                <Image src="font://&#xf015;" class="fas t-14" />
+            </TabStripItem>
+            <TabStripItem>
+                <Label text="Explore" />
+                <Image src="font://&#xf002;" class="fas t-14" />
+            </TabStripItem>
+            <TabStripItem>
+                <Label text="Messages" />
+                <Image src="font://&#xf0e0;" class="fas t-14" />
+            </TabStripItem>
+            <TabStripItem>
+                <Label text="Profile" />
+                <Image src="font://&#xf007;" class="fas t-14" />
+            </TabStripItem>
+        </TabStrip>
+
+        <TabContentItem>
+            <Frame defaultPage="views/home/home-page" />
+        </TabContentItem>
+        <TabContentItem>
+            <Frame defaultPage="views/marketplace/marketplace-page" />
+        </TabContentItem>
+        <TabContentItem>
+            <Frame defaultPage="views/messages/messages-page" />
+        </TabContentItem>
+        <TabContentItem>
+            <Frame defaultPage="views/profile/profile-page" />
+        </TabContentItem>
+    </BottomNavigation>
+</Page>

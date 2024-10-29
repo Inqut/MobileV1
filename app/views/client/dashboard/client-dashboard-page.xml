@@ -1,0 +1,57 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <GridLayout rows="auto, *">
+        <!-- Client-specific Header -->
+        <StackLayout row="0" class="p-4 bg-indigo-600">
+            <Label text="{{ welcomeMessage }}" class="text-xl text-white font-bold" />
+            <Label text="{{ appointmentCount }}" class="text-white" />
+        </StackLayout>
+
+        <!-- Main Content -->
+        <ScrollView row="1">
+            <StackLayout class="p-4">
+                <!-- Quick Actions -->
+                <GridLayout columns="*, *" rows="*, *" class="mb-4">
+                    <StackLayout col="0" row="0" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onFindArtist }}">
+                        <Label text="&#xf002;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Find Artist" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="1" row="0" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onBookAppointment }}">
+                        <Label text="&#xf073;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Book Session" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="0" row="1" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onViewGallery }}">
+                        <Label text="&#xf03e;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="My Gallery" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="1" row="1" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onViewFavorites }}">
+                        <Label text="&#xf004;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Favorites" class="text-center" />
+                    </StackLayout>
+                </GridLayout>
+
+                <!-- Upcoming Appointments -->
+                <Label text="Upcoming Appointments" class="text-lg font-bold mb-2" />
+                <ListView items="{{ upcomingAppointments }}" class="mb-4">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                            <Label col="0" text="{{ date }}" class="mr-2" />
+                            <Label col="1" text="{{ artistName }}" />
+                            <Label col="2" text="&#xf054;" class="fas" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+
+                <!-- Saved Designs -->
+                <Label text="Saved Designs" class="text-lg font-bold mb-2" />
+                <ListView items="{{ savedDesigns }}" orientation="horizontal" height="150">
+                    <ListView.itemTemplate>
+                        <GridLayout rows="*, auto" class="m-2">
+                            <Image row="0" src="{{ imageUrl }}" class="rounded-lg w-32 h-32" />
+                            <Label row="1" text="{{ name }}" class="text-center" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+</Page>

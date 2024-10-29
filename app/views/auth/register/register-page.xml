@@ -1,0 +1,56 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Register" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
+    </ActionBar>
+
+    <ScrollView>
+        <StackLayout class="p-4">
+            <Label text="Create Your Account" class="text-2xl font-bold mb-4" />
+            
+            <!-- Role Selection -->
+            <Label text="I am a:" class="text-lg mb-2" />
+            <StackLayout class="mb-4">
+                <GridLayout columns="*, *, *" class="mb-4">
+                    <Button col="0" text="Client" tap="{{ onRoleSelect }}" data-role="client"
+                            class="{{ selectedRole === 'client' ? 'bg-indigo-600 text-white' : 'bg-gray-200' }}" />
+                    <Button col="1" text="Artist" tap="{{ onRoleSelect }}" data-role="artist"
+                            class="{{ selectedRole === 'artist' ? 'bg-indigo-600 text-white' : 'bg-gray-200' }}" />
+                    <Button col="2" text="Studio" tap="{{ onRoleSelect }}" data-role="studio"
+                            class="{{ selectedRole === 'studio' ? 'bg-indigo-600 text-white' : 'bg-gray-200' }}" />
+                </GridLayout>
+            </StackLayout>
+
+            <!-- Common Fields -->
+            <TextField hint="Email" text="{{ email }}" keyboardType="email" class="mb-3 p-4 bg-gray-100 rounded" />
+            <TextField hint="Password" text="{{ password }}" secure="true" class="mb-3 p-4 bg-gray-100 rounded" />
+            <TextField hint="Display Name" text="{{ displayName }}" class="mb-3 p-4 bg-gray-100 rounded" />
+
+            <!-- Role Specific Fields -->
+            <StackLayout visibility="{{ selectedRole === 'client' ? 'visible' : 'collapsed' }}">
+                <Label text="Preferred Styles" class="mb-2" />
+                <ListView items="{{ tattooStyles }}" class="mb-3">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *">
+                            <CheckBox col="0" checked="{{ selected }}" />
+                            <Label col="1" text="{{ name }}" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <StackLayout visibility="{{ selectedRole === 'artist' ? 'visible' : 'collapsed' }}">
+                <TextField hint="Years of Experience" text="{{ experience }}" keyboardType="number" class="mb-3 p-4 bg-gray-100 rounded" />
+                <TextField hint="Specialties (comma separated)" text="{{ specialties }}" class="mb-3 p-4 bg-gray-100 rounded" />
+            </StackLayout>
+
+            <StackLayout visibility="{{ selectedRole === 'studio' ? 'visible' : 'collapsed' }}">
+                <TextField hint="Business Name" text="{{ businessName }}" class="mb-3 p-4 bg-gray-100 rounded" />
+                <TextField hint="Business Address" text="{{ address }}" class="mb-3 p-4 bg-gray-100 rounded" />
+                <TextField hint="City" text="{{ city }}" class="mb-3 p-4 bg-gray-100 rounded" />
+                <TextField hint="State" text="{{ state }}" class="mb-3 p-4 bg-gray-100 rounded" />
+            </StackLayout>
+
+            <Button text="Register" tap="{{ onRegister }}" class="bg-indigo-600 text-white p-4 rounded" />
+        </StackLayout>
+    </ScrollView>
+</Page>

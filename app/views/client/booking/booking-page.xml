@@ -1,0 +1,103 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Book Appointment" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Progress Steps -->
+        <GridLayout row="0" columns="*, *, *" class="p-4 bg-white border-b border-gray-200">
+            <StackLayout col="0" class="{{ currentStep >= 1 ? 'text-indigo-600' : 'text-gray-400' }}">
+                <Label text="1. Artist" class="text-center" />
+                <Label text="&#xf007;" class="fas text-center" />
+            </StackLayout>
+            <StackLayout col="1" class="{{ currentStep >= 2 ? 'text-indigo-600' : 'text-gray-400' }}">
+                <Label text="2. Service" class="text-center" />
+                <Label text="&#xf5c3;" class="fas text-center" />
+            </StackLayout>
+            <StackLayout col="2" class="{{ currentStep >= 3 ? 'text-indigo-600' : 'text-gray-400' }}">
+                <Label text="3. Time" class="text-center" />
+                <Label text="&#xf017;" class="fas text-center" />
+            </StackLayout>
+        </GridLayout>
+
+        <!-- Step Content -->
+        <ScrollView row="1">
+            <!-- Step 1: Artist Selection -->
+            <StackLayout visibility="{{ currentStep === 1 ? 'visible' : 'collapsed' }}" class="p-4">
+                <SearchBar hint="Search artists..." text="{{ searchQuery }}" class="mb-4" />
+                
+                <ListView items="{{ availableArtists }}" class="mb-4" itemTap="{{ onArtistSelect }}">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *, auto" class="p-4 bg-white rounded-lg shadow-sm mb-2">
+                            <Image col="0" src="{{ profileImage }}" class="w-16 h-16 rounded-full mr-4" />
+                            <StackLayout col="1">
+                                <Label text="{{ name }}" class="font-bold text-lg" />
+                                <Label text="{{ specialties }}" class="text-gray-600" />
+                                <StackLayout orientation="horizontal">
+                                    <Label text="&#xf005;" class="fas text-yellow-400" />
+                                    <Label text="{{ rating }}" class="ml-1" />
+                                </StackLayout>
+                            </StackLayout>
+                            <Label col="2" text="&#xf054;" class="fas text-gray-400" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <!-- Step 2: Service Selection -->
+            <StackLayout visibility="{{ currentStep === 2 ? 'visible' : 'collapsed' }}" class="p-4">
+                <Label text="Selected Artist:" class="font-bold mb-2" />
+                <GridLayout columns="auto, *" class="p-4 bg-white rounded-lg shadow-sm mb-4">
+                    <Image col="0" src="{{ selectedArtist.profileImage }}" class="w-12 h-12 rounded-full mr-4" />
+                    <Label col="1" text="{{ selectedArtist.name }}" class="font-bold" />
+                </GridLayout>
+
+                <Label text="Select Service:" class="font-bold mb-2" />
+                <ListView items="{{ availableServices }}" class="mb-4" itemTap="{{ onServiceSelect }}">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="*, auto" class="p-4 bg-white rounded-lg shadow-sm mb-2">
+                            <StackLayout col="0">
+                                <Label text="{{ name }}" class="font-bold" />
+                                <Label text="{{ duration }}" class="text-gray-600" />
+                                <Label text="{{ price }}" class="text-indigo-600" />
+                            </StackLayout>
+                            <Label col="1" text="&#xf054;" class="fas text-gray-400" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <!-- Step 3: Time Selection -->
+            <StackLayout visibility="{{ currentStep === 3 ? 'visible' : 'collapsed' }}" class="p-4">
+                <Label text="Select Date:" class="font-bold mb-2" />
+                <DatePicker date="{{ selectedDate }}" class="mb-4" />
+
+                <Label text="Available Time Slots:" class="font-bold mb-2" />
+                <ListView items="{{ availableTimeSlots }}" class="mb-4" itemTap="{{ onTimeSlotSelect }}">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *" class="p-4 bg-white rounded-lg shadow-sm mb-2" class="{{ selected ? 'bg-indigo-100' : 'bg-white' }}">
+                            <Label col="0" text="{{ time }}" class="mr-4" />
+                            <Label col="1" text="{{ available ? 'Available' : 'Booked' }}" class="{{ available ? 'text-green-600' : 'text-red-600' }}" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+
+                <!-- Booking Summary -->
+                <StackLayout visibility="{{ showSummary ? 'visible' : 'collapsed' }}" class="p-4 bg-white rounded-lg shadow-sm mb-4">
+                    <Label text="Booking Summary" class="font-bold text-lg mb-2" />
+                    <Label text="{{ 'Artist: ' + selectedArtist.name }}" class="mb-1" />
+                    <Label text="{{ 'Service: ' + selectedService.name }}" class="mb-1" />
+                    <Label text="{{ 'Date: ' + formattedDate }}" class="mb-1" />
+                    <Label text="{{ 'Time: ' + selectedTimeSlot }}" class="mb-1" />
+                    <Label text="{{ 'Total: $' + selectedService.price }}" class="text-indigo-600 font-bold" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Navigation Buttons -->
+        <GridLayout row="1" verticalAlignment="bottom" columns="auto, *" class="p-4 bg-white border-t border-gray-200">
+            <Button col="0" text="Back" tap="{{ onBack }}" class="bg-gray-200" visibility="{{ currentStep > 1 ? 'visible' : 'collapsed' }}" />
+            <Button col="1" text="{{ currentStep === 3 ? 'Confirm Booking' : 'Next' }}" tap="{{ onNext }}" class="bg-indigo-600 text-white" />
+        </GridLayout>
+    </GridLayout>
+</Page>

@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page {
+    background-color: #f5f5f5;
+}
+
+.action-bar {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.bottom-nav {
+    background-color: white;
+    elevation: 8;
+}
+
+.tab-view-item {
+    color: #333;
+}
+
+.active-tab {
+    color: #6366f1;
+}
+
+.fas {
+    font-family: "Font Awesome 6 Free", "fa-solid-900";
+    font-weight: 900;
+}
+
+.loading-indicator {
+    color: #6366f1;
+}
+
+.error-text {
+    color: #ef4444;
+}
+
+/* Platform specific styles */
+.ios Page {
+    margin-top: 0;
+}
+
+.android Page {
+    margin-top: 0;
+}

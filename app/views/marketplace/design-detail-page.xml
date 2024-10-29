@@ -1,0 +1,48 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Design Details" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
+        <ActionItem position="right" text="&#xf004;" class="fas" tap="{{ onLikeDesign }}" />
+    </ActionBar>
+
+    <ScrollView>
+        <StackLayout class="p-4">
+            <!-- Design Image -->
+            <Image src="{{ design.imageUrl }}" stretch="aspectFit" height="300" class="rounded-lg mb-4" />
+
+            <!-- Design Info -->
+            <GridLayout columns="*, auto" class="mb-4">
+                <Label col="0" text="{{ design.title }}" class="text-2xl font-bold" />
+                <Label col="1" text="{{ '$' + design.price }}" class="text-xl text-indigo-600 font-bold" />
+            </GridLayout>
+
+            <Label text="{{ design.description }}" textWrap="true" class="mb-4" />
+
+            <!-- Artist Info -->
+            <GridLayout columns="auto, *, auto" class="bg-gray-100 p-3 rounded-lg mb-4">
+                <Image col="0" src="{{ artistImage }}" class="w-12 h-12 rounded-full" />
+                <StackLayout col="1" class="ml-2">
+                    <Label text="{{ artistName }}" class="font-bold" />
+                    <Label text="View Profile" class="text-indigo-600" tap="{{ onViewArtist }}" />
+                </StackLayout>
+                <Label col="2" text="{{ design.likes + ' likes' }}" class="text-gray-600" />
+            </GridLayout>
+
+            <!-- Tags -->
+            <WrapLayout class="mb-4">
+                <Label text="Tags:" class="font-bold mr-2" />
+                <Repeater items="{{ design.tags }}">
+                    <Repeater.itemTemplate>
+                        <Label text="{{ '#' + $value }}" class="text-indigo-600 mr-2" />
+                    </Repeater.itemTemplate>
+                </Repeater>
+            </WrapLayout>
+
+            <!-- Action Buttons -->
+            <Button text="{{ design.isCustomizable ? 'Request Customization' : 'Purchase Design' }}"
+                    tap="{{ onPurchaseDesign }}"
+                    class="bg-indigo-600 text-white mb-2" />
+
+            <Button text="Message Artist" tap="{{ onMessageArtist }}" class="bg-gray-200" />
+        </StackLayout>
+    </ScrollView>
+</Page>

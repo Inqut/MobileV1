@@ -1,0 +1,76 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Design Marketplace" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
+        <ActionItem position="right" text="&#xf0b0;" class="fas" tap="{{ onShowFilters }}" />
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Search Bar -->
+        <GridLayout row="0" columns="*, auto" class="p-2">
+            <SearchBar col="0" hint="Search designs..." text="{{ searchQuery }}" 
+                       submit="{{ onSearch }}" clear="{{ onClearSearch }}" />
+            <Button col="1" text="{{ sortBy === 'newest' ? '&#xf15d;' : sortBy === 'price' ? '&#xf160;' : '&#xf004;' }}" 
+                    class="fas" tap="{{ onSortChange }}" />
+        </GridLayout>
+
+        <!-- Filter Panel -->
+        <ScrollView row="1" visibility="{{ showFilters ? 'visible' : 'collapsed' }}" class="bg-white">
+            <StackLayout class="p-4">
+                <Label text="Style" class="text-lg font-bold mb-2" />
+                <WrapLayout>
+                    <Repeater items="{{ styles }}">
+                        <Repeater.itemTemplate>
+                            <Button text="{{ $value }}" 
+                                   class="{{ $value === $parents['Repeater'].selectedStyle ? 'bg-indigo-600 text-white' : 'bg-gray-200' }}"
+                                   tap="{{ $parents['Repeater'].onStyleSelect }}" />
+                        </Repeater.itemTemplate>
+                    </Repeater>
+                </WrapLayout>
+
+                <Label text="Placement" class="text-lg font-bold mt-4 mb-2" />
+                <WrapLayout>
+                    <Repeater items="{{ placements }}">
+                        <Repeater.itemTemplate>
+                            <Button text="{{ $value }}"
+                                   class="{{ $parents['Repeater'].selectedPlacements.indexOf($value) > -1 ? 'bg-indigo-600 text-white' : 'bg-gray-200' }}"
+                                   tap="{{ $parents['Repeater'].onPlacementSelect }}" />
+                        </Repeater.itemTemplate>
+                    </Repeater>
+                </WrapLayout>
+
+                <Button text="Apply Filters" tap="{{ onFilterApply }}" class="bg-indigo-600 text-white mt-4" />
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Designs Grid -->
+        <GridLayout row="1" visibility="{{ !showFilters ? 'visible' : 'collapsed' }}">
+            <ScrollView>
+                <GridLayout columns="*, *" class="p-2">
+                    <Repeater items="{{ designs }}" colSpan="2">
+                        <Repeater.itemTemplate>
+                            <GridLayout col="{{ $index % 2 }}" class="m-1">
+                                <StackLayout class="bg-white rounded-lg shadow-sm" tap="{{ $parents['Repeater'].onDesignTap }}">
+                                    <Image src="{{ imageUrl }}" stretch="aspectFill" height="150" class="rounded-t-lg" />
+                                    <StackLayout class="p-2">
+                                        <Label text="{{ title }}" class="font-bold" />
+                                        <Label text="{{ '$' + price }}" class="text-indigo-600" />
+                                        <GridLayout columns="auto, *">
+                                            <Label col="0" text="{{ style }}" class="text-sm text-gray-600" />
+                                            <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+                                                <Label text="&#xf004;" class="fas {{ $parents['Repeater'].isFavorite ? 'text-red-500' : 'text-gray-400' }}" />
+                                                <Label text="{{ likes }}" class="ml-1" />
+                                            </StackLayout>
+                                        </GridLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </GridLayout>
+                        </Repeater.itemTemplate>
+                    </Repeater>
+                </GridLayout>
+            </ScrollView>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator busy="{{ isLoading }}" />
+        </GridLayout>
+    </GridLayout>
+</Page>

@@ -1,0 +1,82 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <GridLayout rows="auto, *">
+        <!-- Studio-specific Header -->
+        <StackLayout row="0" class="p-4 bg-indigo-600">
+            <Label text="{{ welcomeMessage }}" class="text-xl text-white font-bold" />
+            <Label text="{{ studioStats }}" class="text-white" />
+        </StackLayout>
+
+        <!-- Main Content -->
+        <ScrollView row="1">
+            <StackLayout class="p-4">
+                <!-- Quick Actions -->
+                <GridLayout columns="*, *" rows="*, *" class="mb-4">
+                    <StackLayout col="0" row="0" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onManageArtists }}">
+                        <Label text="&#xf0c0;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Artists" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="1" row="0" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onManageSchedule }}">
+                        <Label text="&#xf073;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Schedule" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="0" row="1" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onManageProfile }}">
+                        <Label text="&#xf1ad;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Studio" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="1" row="1" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onViewAnalytics }}">
+                        <Label text="&#xf201;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Analytics" class="text-center" />
+                    </StackLayout>
+                </GridLayout>
+
+                <!-- Studio Artists -->
+                <Label text="Studio Artists" class="text-lg font-bold mb-2" />
+                <ListView items="{{ studioArtists }}" class="mb-4">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                            <Image col="0" src="{{ profileImage }}" class="w-10 h-10 rounded-full mr-2" />
+                            <StackLayout col="1">
+                                <Label text="{{ name }}" class="font-bold" />
+                                <Label text="{{ specialties }}" class="text-gray-600" textWrap="true" />
+                            </StackLayout>
+                            <Label col="2" text="{{ bookingStatus }}" class="text-indigo-600" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+
+                <!-- Today's Schedule -->
+                <Label text="Today's Schedule" class="text-lg font-bold mb-2" />
+                <ListView items="{{ todaySchedule }}" class="mb-4">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                            <Label col="0" text="{{ time }}" class="mr-2" />
+                            <StackLayout col="1">
+                                <Label text="{{ clientName }}" class="font-bold" />
+                                <Label text="{{ artistName }}" class="text-gray-600" />
+                            </StackLayout>
+                            <Label col="2" text="{{ status }}" class="text-indigo-600" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+
+                <!-- Recent Reviews -->
+                <Label text="Recent Reviews" class="text-lg font-bold mb-2" />
+                <ListView items="{{ recentReviews }}" class="mb-4">
+                    <ListView.itemTemplate>
+                        <GridLayout rows="auto, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                            <GridLayout row="0" columns="auto, *, auto">
+                                <Image col="0" src="{{ clientImage }}" class="w-8 h-8 rounded-full mr-2" />
+                                <Label col="1" text="{{ clientName }}" class="font-bold" />
+                                <StackLayout col="2" orientation="horizontal">
+                                    <Label text="&#xf005;" class="fas text-yellow-400" />
+                                    <Label text="{{ rating }}" class="ml-1" />
+                                </StackLayout>
+                            </GridLayout>
+                            <Label row="1" text="{{ review }}" textWrap="true" class="text-gray-600 mt-2" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+</Page>

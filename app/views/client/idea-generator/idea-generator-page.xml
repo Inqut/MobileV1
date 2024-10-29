@@ -1,0 +1,72 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Tattoo Idea Generator" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
+    </ActionBar>
+
+    <GridLayout rows="auto, *, auto">
+        <!-- Input Section -->
+        <StackLayout row="0" class="p-4">
+            <Label text="Describe your tattoo idea" class="text-lg font-bold mb-2" />
+            <TextView hint="E.g., 'A nature-inspired sleeve with mountains and forest elements'"
+                     text="{{ prompt }}"
+                     height="100"
+                     class="bg-gray-100 rounded p-2 mb-4" />
+            <Button text="Generate Ideas" tap="{{ onGenerateIdeas }}" class="bg-indigo-600 text-white" />
+        </StackLayout>
+
+        <!-- Results Section -->
+        <ScrollView row="1">
+            <StackLayout class="p-4">
+                <!-- Loading State -->
+                <ActivityIndicator busy="{{ isLoading }}" class="m-4" />
+
+                <!-- Suggestions -->
+                <StackLayout visibility="{{ suggestions.length > 0 ? 'visible' : 'collapsed' }}">
+                    <Label text="Suggested Ideas" class="text-lg font-bold mb-2" />
+                    <ListView items="{{ suggestions }}" class="mb-4">
+                        <ListView.itemTemplate>
+                            <GridLayout columns="*, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                                <Label col="0" text="{{ text }}" textWrap="true" />
+                                <Button col="1" text="&#xf004;" class="fas" tap="{{ $parents['ListView'].onLikeSuggestion }}" />
+                            </GridLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+
+                    <!-- Reference Images -->
+                    <Label text="Reference Images" class="text-lg font-bold mb-2" />
+                    <ListView items="{{ referenceImages }}" orientation="horizontal" height="200" class="mb-4">
+                        <ListView.itemTemplate>
+                            <GridLayout class="m-2">
+                                <Image src="{{ url }}" class="rounded-lg w-40 h-40" />
+                            </GridLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+
+                    <!-- Artist Recommendations -->
+                    <Label text="Recommended Artists" class="text-lg font-bold mb-2" />
+                    <ListView items="{{ recommendedArtists }}" class="mb-4">
+                        <ListView.itemTemplate>
+                            <GridLayout columns="auto, *, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                                <Image col="0" src="{{ profileImage }}" class="w-12 h-12 rounded-full mr-2" />
+                                <StackLayout col="1">
+                                    <Label text="{{ name }}" class="font-bold" />
+                                    <Label text="{{ specialties }}" class="text-gray-600" />
+                                </StackLayout>
+                                <Button col="2" text="View" tap="{{ $parents['ListView'].onViewArtist }}" class="bg-indigo-600 text-white" />
+                            </GridLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Refinement Section -->
+        <StackLayout row="2" class="p-4 bg-white border-t border-gray-200">
+            <Label text="Not quite right? Add more details to refine:" class="mb-2" />
+            <GridLayout columns="*, auto">
+                <TextField col="0" hint="Add more details..." text="{{ refinementFeedback }}" class="mr-2" />
+                <Button col="1" text="Refine" tap="{{ onRefineIdea }}" class="bg-indigo-600 text-white" />
+            </GridLayout>
+        </StackLayout>
+    </GridLayout>
+</Page>

@@ -1,0 +1,61 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <GridLayout rows="auto, *">
+        <!-- Artist-specific Header -->
+        <StackLayout row="0" class="p-4 bg-indigo-600">
+            <Label text="{{ welcomeMessage }}" class="text-xl text-white font-bold" />
+            <Label text="{{ bookingStats }}" class="text-white" />
+        </StackLayout>
+
+        <!-- Main Content -->
+        <ScrollView row="1">
+            <StackLayout class="p-4">
+                <!-- Quick Actions -->
+                <GridLayout columns="*, *" rows="*, *" class="mb-4">
+                    <StackLayout col="0" row="0" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onManagePortfolio }}">
+                        <Label text="&#xf03e;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Portfolio" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="1" row="0" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onManageSchedule }}">
+                        <Label text="&#xf073;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Schedule" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="0" row="1" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onUploadDesigns }}">
+                        <Label text="&#xf093;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Upload" class="text-center" />
+                    </StackLayout>
+                    <StackLayout col="1" row="1" class="p-2 m-1 bg-white rounded-lg shadow" tap="{{ onViewAnalytics }}">
+                        <Label text="&#xf201;" class="fas text-2xl text-center text-indigo-600" />
+                        <Label text="Analytics" class="text-center" />
+                    </StackLayout>
+                </GridLayout>
+
+                <!-- Today's Appointments -->
+                <Label text="Today's Appointments" class="text-lg font-bold mb-2" />
+                <ListView items="{{ todayAppointments }}" class="mb-4">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                            <Label col="0" text="{{ time }}" class="mr-2" />
+                            <Label col="1" text="{{ clientName }}" />
+                            <Label col="2" text="{{ status }}" class="text-indigo-600" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+
+                <!-- Recent Messages -->
+                <Label text="Recent Messages" class="text-lg font-bold mb-2" />
+                <ListView items="{{ recentMessages }}" class="mb-4">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *, auto" class="p-3 bg-white rounded-lg shadow-sm mb-2">
+                            <Image col="0" src="{{ clientImage }}" class="w-10 h-10 rounded-full mr-2" />
+                            <StackLayout col="1">
+                                <Label text="{{ clientName }}" class="font-bold" />
+                                <Label text="{{ lastMessage }}" class="text-gray-600" textWrap="true" />
+                            </StackLayout>
+                            <Label col="2" text="{{ time }}" class="text-sm text-gray-500" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+</Page>

@@ -1,0 +1,88 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Social Media" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
+        <ActionItem position="right" text="&#xf067;" class="fas" tap="{{ onCreatePost }}" />
+    </ActionBar>
+
+    <TabView selectedIndex="{{ selectedTabIndex }}">
+        <!-- Scheduled Posts -->
+        <TabViewItem title="Scheduled">
+            <GridLayout>
+                <ListView items="{{ scheduledPosts }}" class="list-group">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="*, auto" class="list-group-item">
+                            <StackLayout col="0">
+                                <Label text="{{ content }}" textWrap="true" />
+                                <GridLayout columns="auto, auto" class="mt-2">
+                                    <Label col="0" text="{{ scheduledFor | date }}" class="text-gray-600" />
+                                    <Label col="1" text="{{ platforms.join(', ') }}" class="text-indigo-600 ml-2" />
+                                </GridLayout>
+                            </StackLayout>
+                            <Button col="1" text="&#xf142;" class="fas" tap="{{ $parents['ListView'].onPostOptions }}" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+                <ActivityIndicator busy="{{ isLoading }}" />
+            </GridLayout>
+        </TabViewItem>
+
+        <!-- Published Posts -->
+        <TabViewItem title="Published">
+            <GridLayout>
+                <ListView items="{{ publishedPosts }}" class="list-group">
+                    <ListView.itemTemplate>
+                        <GridLayout rows="auto, auto" class="list-group-item">
+                            <Label row="0" text="{{ content }}" textWrap="true" />
+                            <GridLayout row="1" columns="auto, auto, auto" class="mt-2">
+                                <Label col="0" text="{{ engagement.likes + ' likes' }}" class="text-gray-600" />
+                                <Label col="1" text="{{ engagement.comments + ' comments' }}" class="text-gray-600 ml-2" />
+                                <Label col="2" text="{{ engagement.shares + ' shares' }}" class="text-gray-600 ml-2" />
+                            </GridLayout>
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+                <ActivityIndicator busy="{{ isLoading }}" />
+            </GridLayout>
+        </TabViewItem>
+
+        <!-- Analytics -->
+        <TabViewItem title="Analytics">
+            <ScrollView>
+                <StackLayout class="p-4">
+                    <Label text="Performance Overview" class="text-xl font-bold mb-4" />
+                    
+                    <!-- Engagement Stats -->
+                    <GridLayout columns="*, *, *" class="mb-4">
+                        <StackLayout col="0" class="text-center">
+                            <Label text="{{ totalLikes }}" class="text-2xl font-bold text-indigo-600" />
+                            <Label text="Likes" class="text-gray-600" />
+                        </StackLayout>
+                        <StackLayout col="1" class="text-center">
+                            <Label text="{{ totalComments }}" class="text-2xl font-bold text-indigo-600" />
+                            <Label text="Comments" class="text-gray-600" />
+                        </StackLayout>
+                        <StackLayout col="2" class="text-center">
+                            <Label text="{{ totalShares }}" class="text-2xl font-bold text-indigo-600" />
+                            <Label text="Shares" class="text-gray-600" />
+                        </StackLayout>
+                    </GridLayout>
+
+                    <!-- Best Performing Posts -->
+                    <Label text="Top Posts" class="text-lg font-bold mb-2" />
+                    <ListView items="{{ topPosts }}" height="300">
+                        <ListView.itemTemplate>
+                            <GridLayout columns="auto, *" class="p-2">
+                                <Image col="0" src="{{ images[0] }}" class="w-16 h-16 rounded" />
+                                <StackLayout col="1" class="ml-2">
+                                    <Label text="{{ content }}" textWrap="true" />
+                                    <Label text="{{ engagement.likes + ' likes · ' + engagement.comments + ' comments' }}"
+                                           class="text-gray-600" />
+                                </StackLayout>
+                            </GridLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+        </TabViewItem>
+    </TabView>
+</Page>
